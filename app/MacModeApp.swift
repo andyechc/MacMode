@@ -10,8 +10,10 @@ struct MacModeApp: App {
     )
 
     var body: some Scene {
-        MenuBarExtra("MacMode", systemImage: "slider.horizontal.3") {
+        MenuBarExtra {
             MenuBarView(manager: manager)
+        } label: {
+            Label(manager.currentMode.name, systemImage: "slider.horizontal.3")
         }
         .menuBarExtraStyle(.window)
     }
