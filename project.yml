@@ -1,0 +1,55 @@
+name: MacMode
+options:
+  bundleIdPrefix: app.macmode
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    ENABLE_TESTABILITY: YES
+
+targets:
+  MacMode:
+    type: application
+    platform: macOS
+    productBundleIdentifier: app.macmode
+    sources:
+      - path: app
+    info:
+      path: app/Info.plist
+      properties:
+        CFBundleDisplayName: MacMode
+        CFBundleShortVersionString: 0.1.0
+        CFBundleVersion: "1"
+        LSMinimumSystemVersion: "14.0"
+        LSUIElement: true
+        NSPrincipalClass: NSApplication
+
+  MacModeTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: tests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: MacMode
+
+schemes:
+  MacMode:
+    build:
+      targets:
+        MacMode: all
+        MacModeTests: [test]
+    test:
+      config: Debug
+      targets:
+        - MacModeTests
