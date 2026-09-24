@@ -1,8 +1,10 @@
 # MacMode
 
-> **Status: scaffold + domain complete, all tests green. No system
-> integration yet — the app launches as a menu bar agent and shows its
-> (persisted) mode, but does not change Function Keys.**
+> **Status: MVP code complete, core behavior UNVERIFIED.
+> The app switches modes with read-back verification, but whether the
+> physical keys follow on macOS 27 is under investigation (polarity
+> question, see `docs/research/function-keys.md`). Do not treat key
+> behavior as confirmed yet.**
 
 MacMode is a lightweight native macOS menu bar utility that switches the Mac
 between two system profiles — **DEV** and **GAMING** — with a single fast
@@ -21,13 +23,19 @@ and [`AGENTS.md`](AGENTS.md) for agent working rules.
 ### Available
 
 * Menu bar agent (window-style popover) with mode select, per-mode accent
-  color, Information and Settings windows, mode library editing
-  (add/rename/recolor/delete), persisted mode, and clean quit. Verified:
-  `xcodebuild build`, `xcodebuild test` (23 tests), launch as background
+  color, Information hover side panel and Settings window, custom mode
+  library editing (add/rename/recolor/delete) with persistence and legacy
+  migration, and clean quit. Verified:
+  `xcodebuild build`, `xcodebuild test` (25 tests), launch as background
   process.
-* Domain layer: `MacMode`, `ModeManager` (idempotent transitions, explicit
-  errors, `UserDefaults` persistence), `FeatureManager` (`SystemFeature`
-  fan-out), `OSLog` logging. All unit-tested with mocks; no system touched.
+* Domain layer: `AppMode` data model, `ModeManager` (idempotent transitions,
+  confirmed-vs-desired state, explicit errors, library management),
+  `FeatureManager` (`SystemFeature` fan-out), `OSLog` logging. All
+  unit-tested with mocks.
+* System integration: IOKit HID `HIDFKeyMode` set + `fnState` persistence +
+  best-effort Settings re-sync, success only on matching read-back.
+  Unit-tested via mocks; **live key behavior UNVERIFIED — see
+  `docs/research/function-keys.md` (polarity under investigation).**
 
 ### Planned
 

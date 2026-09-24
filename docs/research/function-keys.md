@@ -148,6 +148,35 @@ Deployment target: **macOS 14.0** (proposed; `@Observable`, modern
    Phase 4 must check F-keys on each after a switch.
 7. Mode↔setting mapping (DEV=function) is a product default, reversible.
 
+## Polarity under investigation (2026-09-24, UNVERIFIED)
+
+User reports inverted behavior with pristine presets: DEV selected →
+F1 gives brightness; GAMING selected → F1 acts as F1. Live stores at
+report time: `fnState=0`, `HIDFKeyMode=0` on all services, app selection
+`DEV` (selectedID = dev UUID) with a legacy `currentMode=gaming` key —
+i.e. desired=DEV while system holds GAMING's values (delete-fallback or
+unapplied switch; the UI correctly shows it unconfirmed).
+
+Two live hypotheses, both consistent with parts of the evidence:
+
+* H1 — HID polarity flipped on macOS 27: `0`=standard, `1`=media
+  (opposite of Fluor's 2020 `FKeyMode`). Fits the report perfectly if both
+  applies succeeded with read-back match.
+* H2 — normal polarity; the DEV apply never took effect (selection vs
+  system confusion) and the GAME observation needs retesting under a
+  controlled protocol.
+
+Decisive tests (need the human + real keys, cannot be automated here):
+
+1. At the current `0/0` state, press F1 (no Fn): brightness ⇒ H2
+   territory (`0`=media, normal); F1-action ⇒ H1 (flipped).
+2. Read the Settings checkbox state at `fnState=0`: OFF ⇒ normal
+   (`false`=media); ON ⇒ the boolean mapping is inverted too.
+
+Do NOT change the mapping until (1) and (2) answer. If H1 wins, swap the
+interpretation at the IOKit boundary (explicit map, NOT raw-value swap:
+`FunctionKeyMode` raw values are already persisted in user libraries).
+
 ## Test plan hooks (for Phase 3/4)
 
 * Unit: `ModeManager` transitions, `FeatureManager` fan-out,
