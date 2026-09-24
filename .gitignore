@@ -1,0 +1,42 @@
+# Xcode / Swift
+build/
+DerivedData/
+*.o
+*.d
+
+# Xcode project user state
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+xcuserdata/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# xcodegen cache
+# (project.yml is source of truth and IS committed)
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Signing & secrets — NEVER commit
+*.p12
+*.mobileprovision
+*.provisionprofile
+*.cer
+*.key
+.env
+.env.*
+!.env.example
+*secret*
+*token*
+
+# Logs & temp
+*.log
+*.tmp
+/tmp/
