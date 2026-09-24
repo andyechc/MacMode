@@ -1,10 +1,8 @@
 # MacMode
 
-> **Status: MVP code complete, core behavior UNVERIFIED.
-> The app switches modes with read-back verification, but whether the
-> physical keys follow on macOS 27 is under investigation (polarity
-> question, see `docs/research/function-keys.md`). Do not treat key
-> behavior as confirmed yet.**
+> **Status: MVP functional and verified on a real Mac (both modes change
+> physical key behavior as configured). Pending: reboot-survival check
+> (needs a user reboot) and first push to GitHub.**
 
 MacMode is a lightweight native macOS menu bar utility that switches the Mac
 between two system profiles — **DEV** and **GAMING** — with a single fast
@@ -34,8 +32,9 @@ and [`AGENTS.md`](AGENTS.md) for agent working rules.
   unit-tested with mocks.
 * System integration: IOKit HID `HIDFKeyMode` set + `fnState` persistence +
   best-effort Settings re-sync, success only on matching read-back.
-  Unit-tested via mocks; **live key behavior UNVERIFIED — see
-  `docs/research/function-keys.md` (polarity under investigation).**
+  Unit-tested via mocks; **live key behavior verified on a real Mac in both
+  directions** (media↔function). Normal polarity confirmed (`0`=media,
+  `1`=function); reboot survival not yet checked.
 
 ### Planned
 

@@ -148,7 +148,17 @@ Deployment target: **macOS 14.0** (proposed; `@Observable`, modern
    Phase 4 must check F-keys on each after a switch.
 7. Mode↔setting mapping (DEV=function) is a product default, reversible.
 
-## Polarity under investigation (2026-09-24, UNVERIFIED)
+## Polarity investigation — RESOLVED 2026-09-24 (FACT)
+
+Verdict: **no polarity bug.** Reading the user's live library
+(`modes.library.v1`) showed DEV=`functionKeys:0` (media) and
+GAMING=`functionKeys:1` (function) — the user had swapped the behaviors
+in Settings themselves. The app applied exactly what was configured
+(read-back verified both directions) and F1 behaved accordingly
+(brightness in DEV, F1 in GAMING). Normal polarity confirmed:
+`0/0` (HID/fnState) = media keys, matching Fluor's `0`=media / `1`=function
+and the `fnState=true`=standard convention. H1/H2 below are superseded;
+kept for the record.
 
 User reports inverted behavior with pristine presets: DEV selected →
 F1 gives brightness; GAMING selected → F1 acts as F1. Live stores at
