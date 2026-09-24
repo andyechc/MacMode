@@ -1,8 +1,8 @@
 # MacMode
 
-> **Status: MVP functional and verified on a real Mac (both modes change
-> physical key behavior as configured). Pending: reboot-survival check
-> (needs a user reboot) and first push to GitHub.**
+> **Status: v0.1.0 released. MVP functional and verified on a real Mac
+> (both modes change physical key behavior as configured). Pending:
+> reboot-survival check (needs a user reboot).**
 
 MacMode is a lightweight native macOS menu bar utility that switches the Mac
 between two system profiles — **DEV** and **GAMING** — with a single fast
@@ -86,7 +86,17 @@ Determined from the actual environment (not invented):
 * Required permissions: **TBD** — under research. Only the strict minimum
   will be requested.
 
-## Installation
+## Download
+
+* Landing page: `https://andyechc.github.io/MacMode/`
+* Latest release: [v0.1.0](https://github.com/andyechc/MacMode/releases/latest)
+  (`MacMode-0.1.0-macOS.zip`, macOS 14+, Intel + Apple Silicon).
+
+Install: unzip → move `MacMode.app` to `/Applications` → first launch via
+right-click → **Open** (v0.1.0 is ad-hoc signed; Developer ID notarization
+is planned).
+
+## Installation (from source)
 
 Developer installation (verified 2026-09-24 on macOS 27.0 / Xcode 27.0):
 
