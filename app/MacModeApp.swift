@@ -13,5 +13,6 @@ struct MacModeApp: App {
         MenuBarExtra("MacMode", systemImage: "slider.horizontal.3") {
             MenuBarView(manager: manager)
         }
+        .menuBarExtraStyle(.window)
     }
 }
