@@ -1,20 +1,26 @@
 import SwiftUI
 
-/// Menu bar popover. The segmented control commits the mode through
-/// `ModeManager`; a mode is shown as "Active now" only after the system
-/// confirms it (`confirmedMode`). Errors are shown in plain language.
+/// Menu bar popover. A single toggle switches modes: left = DEV,
+/// right = GAMING. The switch reflects `currentMode`, so a failed
+/// transition snaps it back automatically. A mode is shown as
+/// "Active now" only after the system confirms it (`confirmedMode`).
 struct MenuBarView: View {
     var manager: ModeManager
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("MacMode").font(.headline)
-            Picker("Mode", selection: modeBinding) {
-                Text("DEV").tag(MacMode.dev)
-                Text("GAMING").tag(MacMode.gaming)
+
+            HStack(spacing: 8) {
+                sideLabel("DEV", active: manager.currentMode == .dev)
+                Toggle(isOn: gamingBinding) {
+                    EmptyView()
+                }
+                .toggleStyle(.switch)
+                .disabled(manager.isApplying)
+                .labelsHidden()
+                sideLabel("GAMING", active: manager.currentMode == .gaming)
             }
-            .pickerStyle(.segmented)
-            .disabled(manager.isApplying)
             .frame(width: 220)
 
             if manager.isApplying {
@@ -41,10 +47,17 @@ struct MenuBarView: View {
         .padding(12)
     }
 
-    private var modeBinding: Binding<MacMode> {
+    private func sideLabel(_ text: String, active: Bool) -> some View {
+        Text(text)
+            .font(.caption)
+            .fontWeight(active ? .bold : .regular)
+            .foregroundStyle(active ? .primary : .secondary)
+    }
+
+    private var gamingBinding: Binding<Bool> {
         Binding(
-            get: { manager.currentMode },
-            set: { newMode in Task { await manager.setMode(newMode) } }
+            get: { manager.currentMode == .gaming },
+            set: { isGaming in Task { await manager.setMode(isGaming ? .gaming : .dev) } }
         )
     }
 }
