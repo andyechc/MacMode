@@ -16,8 +16,11 @@
 		9B2A00C6D50C8F402F62BCB2 /* MacModeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BD7FB6EF3CEB13705AD8B /* MacModeApp.swift */; };
 		B7812F94D6DC690DDBCE0B73 /* ModeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175B8F62F7AF3023A912F3A4 /* ModeManagerTests.swift */; };
 		BC9B06A165831C2A432D62E3 /* ModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDEF2F35836A1F19FAE3159 /* ModeManager.swift */; };
+		D16A1F8C4013CD3FFD4A86EC /* FunctionKeyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09D28664EA7A47720A33BF3 /* FunctionKeyController.swift */; };
+		D704725B319332B1FC808AB2 /* FunctionKeyFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D43F5DE723F034D780A538A /* FunctionKeyFeatureTests.swift */; };
 		DE66C799394E98DF80CAAFF2 /* MacMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A340138B5300DD4E8E59A7 /* MacMode.swift */; };
 		DEC7729BC28BAFB018EF26F2 /* SystemFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2045D54B23878964FA8969AA /* SystemFeature.swift */; };
+		E36F4B0817970E0CF14D26A5 /* FunctionKeyFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F5F5E0CC88AEBDF1D20E /* FunctionKeyFeature.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +44,10 @@
 		7BFF320E8F8B148B3CA7C241 /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
 		7C0D3BFDF4DB4C152575B32F /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		7D0D15A980E85A5EE8443DB3 /* FeatureManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManagerTests.swift; sourceTree = "<group>"; };
+		8D43F5DE723F034D780A538A /* FunctionKeyFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionKeyFeatureTests.swift; sourceTree = "<group>"; };
+		9670F5F5E0CC88AEBDF1D20E /* FunctionKeyFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionKeyFeature.swift; sourceTree = "<group>"; };
 		AA42E467DB74C498BC90C02B /* AppLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLog.swift; sourceTree = "<group>"; };
+		B09D28664EA7A47720A33BF3 /* FunctionKeyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionKeyController.swift; sourceTree = "<group>"; };
 		B6A340138B5300DD4E8E59A7 /* MacMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMode.swift; sourceTree = "<group>"; };
 		C1A14390E0F0C43BAEFF649E /* MacModeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacModeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F892538D09D5E479AE2D8EBC /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
@@ -77,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				7BFF320E8F8B148B3CA7C241 /* FeatureManager.swift */,
+				CDEBD4716073887771A7F547 /* FunctionKeys */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -130,10 +137,20 @@
 			path = Infrastructure;
 			sourceTree = "<group>";
 		};
+		CDEBD4716073887771A7F547 /* FunctionKeys */ = {
+			isa = PBXGroup;
+			children = (
+				B09D28664EA7A47720A33BF3 /* FunctionKeyController.swift */,
+				9670F5F5E0CC88AEBDF1D20E /* FunctionKeyFeature.swift */,
+			);
+			path = FunctionKeys;
+			sourceTree = "<group>";
+		};
 		D706A0AE77601820E1AF7C54 /* tests */ = {
 			isa = PBXGroup;
 			children = (
 				7D0D15A980E85A5EE8443DB3 /* FeatureManagerTests.swift */,
+				8D43F5DE723F034D780A538A /* FunctionKeyFeatureTests.swift */,
 				F892538D09D5E479AE2D8EBC /* Mocks.swift */,
 				175B8F62F7AF3023A912F3A4 /* ModeManagerTests.swift */,
 			);
@@ -231,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				928FA6C4A056D578A7F9C932 /* FeatureManagerTests.swift in Sources */,
+				D704725B319332B1FC808AB2 /* FunctionKeyFeatureTests.swift in Sources */,
 				608B47875332D0F9072D58CC /* Mocks.swift in Sources */,
 				B7812F94D6DC690DDBCE0B73 /* ModeManagerTests.swift in Sources */,
 			);
@@ -242,6 +260,8 @@
 			files = (
 				98A35FF0C464B57804115E82 /* AppLog.swift in Sources */,
 				63AA8735FD7E6E6C503C9B09 /* FeatureManager.swift in Sources */,
+				D16A1F8C4013CD3FFD4A86EC /* FunctionKeyController.swift in Sources */,
+				E36F4B0817970E0CF14D26A5 /* FunctionKeyFeature.swift in Sources */,
 				DE66C799394E98DF80CAAFF2 /* MacMode.swift in Sources */,
 				9B2A00C6D50C8F402F62BCB2 /* MacModeApp.swift in Sources */,
 				950678B89ADBE64CB2ABFA6F /* MenuBarView.swift in Sources */,
