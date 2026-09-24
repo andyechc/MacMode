@@ -69,3 +69,12 @@ created when they gain real content, not before.
 * macOS deployment target (proposed 14.0; confirm via research).
 * Exact `FunctionKeyController` shape (confirm via research).
 * Permission set (confirm via research).
+
+## Scope note (user request, 2026-09-24)
+
+Custom user modes (add/rename/recolor/delete, per-mode Function Key
+setting) were implemented ahead of the SPEC §32 v1.0 roadmap at the
+user's explicit request. `MacMode` is therefore `AppMode` data
+(`id/name/color/functionKeys`, persisted library + selection with legacy
+migration) instead of a fixed two-case enum. The `SystemFeature` contract
+is unchanged apart from taking `AppMode`.
