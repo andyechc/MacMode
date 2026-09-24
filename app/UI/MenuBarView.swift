@@ -87,4 +87,3 @@ struct ModeSwitch: View {
         .accessibilityValue(isOn ? "on" : "off")
     }
 }
-}
