@@ -1,7 +1,6 @@
 import Foundation
 
-/// Maps `MacMode` onto driver state. DEV keeps standard function keys
-/// (IDEs/debuggers); GAMING keeps media keys (no Fn required).
+/// Maps an `AppMode` onto driver state via its `functionKeys` setting.
 public struct FunctionKeyFeature: SystemFeature {
     public let identifier = "function-keys"
     private let controller: any FunctionKeyController
@@ -10,7 +9,14 @@ public struct FunctionKeyFeature: SystemFeature {
         self.controller = controller
     }
 
-    public func apply(for mode: MacMode) async throws {
-        try await controller.applyMode(mode == .dev ? .function : .media)
+    public func apply(for mode: AppMode) async throws {
+        try await controller.applyMode(mode.functionKeys)
+    }
+
+    public func summary(for mode: AppMode) -> String {
+        switch mode.functionKeys {
+        case .function: return "Standard function keys (F1 acts as F1)"
+        case .media: return "Media keys (F1 controls brightness, etc.)"
+        }
     }
 }

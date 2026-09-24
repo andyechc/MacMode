@@ -5,7 +5,14 @@ import Foundation
 /// touch low-level macOS APIs directly.
 public protocol SystemFeature: Sendable {
     var identifier: String { get }
-    func apply(for mode: MacMode) async throws
+    func apply(for mode: AppMode) async throws
+    /// One-line, user-facing description of what this feature does in a
+    /// mode (shown in the Info section). No technical details.
+    func summary(for mode: AppMode) -> String
+}
+
+public extension SystemFeature {
+    func summary(for mode: AppMode) -> String { "—" }
 }
 
 /// User-facing errors. Technical details go to OSLog, never to the UI.

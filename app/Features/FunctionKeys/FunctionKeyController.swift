@@ -6,7 +6,7 @@ import OSLog
 /// Driver-level function-key mode. Matches the live `HIDFKeyMode` value:
 /// `0` = media/special keys, `1` = standard function keys.
 /// (Semantics confirmed against Fluor's `FKeyMode` + live `ioreg`.)
-public enum FunctionKeyMode: Int, Sendable {
+public enum FunctionKeyMode: Int, Codable, Sendable {
     case media = 0
     case function = 1
 }
