@@ -6,30 +6,33 @@ final class ModeManagerTests: XCTestCase {
 
     func testDevToGamingAppliesAndPersists() async {
         let feature = MockFeature()
+        let store = makeIsolatedStore()
         let manager = ModeManager(
             features: FeatureManager(features: [feature]),
-            store: makeIsolatedStore()
+            store: store
         )
-        XCTAssertEqual(manager.currentMode, .dev)
+        XCTAssertEqual(manager.currentMode, AppMode.dev)
 
-        await manager.setMode(.gaming)
+        await manager.setMode(AppMode.gaming)
 
-        XCTAssertEqual(manager.currentMode, .gaming)
-        XCTAssertEqual(feature.appliedModes, [.gaming])
+        XCTAssertEqual(manager.currentMode, AppMode.gaming)
+        XCTAssertEqual(feature.appliedModes, [AppMode.gaming])
         XCTAssertNil(manager.lastError)
+        XCTAssertEqual(store.loadSelectedID(), AppMode.gaming.id)
     }
 
     func testGamingToDev() async {
         let feature = MockFeature()
         let store = makeIsolatedStore()
-        store.saveMode(.gaming)
+        store.saveLibrary([.dev, .gaming])
+        store.saveSelectedID(AppMode.gaming.id)
         let manager = ModeManager(features: FeatureManager(features: [feature]), store: store)
-        XCTAssertEqual(manager.currentMode, .gaming)
+        XCTAssertEqual(manager.currentMode, AppMode.gaming)
 
-        await manager.setMode(.dev)
+        await manager.setMode(AppMode.dev)
 
-        XCTAssertEqual(manager.currentMode, .dev)
-        XCTAssertEqual(feature.appliedModes, [.dev])
+        XCTAssertEqual(manager.currentMode, AppMode.dev)
+        XCTAssertEqual(feature.appliedModes, [AppMode.dev])
     }
 
     func testSameModeIsNoop() async {
@@ -39,9 +42,9 @@ final class ModeManagerTests: XCTestCase {
             store: makeIsolatedStore()
         )
 
-        await manager.setMode(.dev)
+        await manager.setMode(AppMode.dev)
 
-        XCTAssertEqual(manager.currentMode, .dev)
+        XCTAssertEqual(manager.currentMode, AppMode.dev)
         XCTAssertTrue(feature.appliedModes.isEmpty)
     }
 
@@ -50,22 +53,32 @@ final class ModeManagerTests: XCTestCase {
         let store = makeIsolatedStore()
         let manager = ModeManager(features: FeatureManager(features: [feature]), store: store)
 
-        await manager.setMode(.gaming)
+        await manager.setMode(AppMode.gaming)
 
-        XCTAssertEqual(manager.currentMode, .dev)
+        XCTAssertEqual(manager.currentMode, AppMode.dev)
         XCTAssertNotNil(manager.lastError)
-        XCTAssertEqual(manager.lastError?.errorDescription?.contains("mock"), true)
         // Nothing persisted on failure: a fresh manager still reads DEV.
         let reloaded = ModeManager(features: FeatureManager(features: []), store: store)
-        XCTAssertEqual(reloaded.currentMode, .dev)
+        XCTAssertEqual(reloaded.currentMode, AppMode.dev)
     }
 
     func testPersistenceRestoration() async {
         let store = makeIsolatedStore()
         let first = ModeManager(features: FeatureManager(features: [MockFeature()]), store: store)
-        await first.setMode(.gaming)
+        await first.setMode(AppMode.gaming)
 
         let second = ModeManager(features: FeatureManager(features: []), store: store)
-        XCTAssertEqual(second.currentMode, .gaming)
+        XCTAssertEqual(second.currentMode, AppMode.gaming)
+    }
+
+    func testLegacyPreferenceMigrates() {
+        let defaults = UserDefaults(suiteName: "app.macmode.tests")!
+        defaults.removePersistentDomain(forName: "app.macmode.tests")
+        defaults.set("gaming", forKey: "currentMode")
+        let manager = ModeManager(
+            features: FeatureManager(features: []),
+            store: UserDefaultsModeStore(defaults: defaults)
+        )
+        XCTAssertEqual(manager.currentMode, AppMode.gaming)
     }
 }

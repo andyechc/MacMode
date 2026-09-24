@@ -4,7 +4,7 @@ import Foundation
 /// Test double. Records invocations; optionally throws.
 final class MockFeature: SystemFeature, @unchecked Sendable {
     let identifier: String
-    private(set) var appliedModes: [MacMode] = []
+    private(set) var appliedModes: [AppMode] = []
     var errorToThrow: Error?
 
     init(identifier: String = "mock", errorToThrow: Error? = nil) {
@@ -12,7 +12,7 @@ final class MockFeature: SystemFeature, @unchecked Sendable {
         self.errorToThrow = errorToThrow
     }
 
-    func apply(for mode: MacMode) async throws {
+    func apply(for mode: AppMode) async throws {
         appliedModes.append(mode)
         if let errorToThrow { throw errorToThrow }
     }

@@ -23,21 +23,28 @@ final class FunctionKeyFeatureTests: XCTestCase {
 
     func testDevMapsToFunctionKeys() async throws {
         let controller = MockFunctionKeyController()
-        try await FunctionKeyFeature(controller: controller).apply(for: .dev)
+        try await FunctionKeyFeature(controller: controller).apply(for: AppMode.dev)
         XCTAssertEqual(controller.appliedModes, [.function])
     }
 
     func testGamingMapsToMediaKeys() async throws {
         let controller = MockFunctionKeyController()
-        try await FunctionKeyFeature(controller: controller).apply(for: .gaming)
+        try await FunctionKeyFeature(controller: controller).apply(for: AppMode.gaming)
         XCTAssertEqual(controller.appliedModes, [.media])
+    }
+
+    func testCustomModeUsesItsOwnSetting() async throws {
+        let controller = MockFunctionKeyController()
+        let custom = AppMode(name: "PRESENT", color: .purple, functionKeys: .function)
+        try await FunctionKeyFeature(controller: controller).apply(for: custom)
+        XCTAssertEqual(controller.appliedModes, [.function])
     }
 
     func testControllerErrorPropagates() async {
         let controller = MockFunctionKeyController()
         controller.errorToThrow = FunctionKeyError.setFailed(code: -1)
         do {
-            try await FunctionKeyFeature(controller: controller).apply(for: .dev)
+            try await FunctionKeyFeature(controller: controller).apply(for: AppMode.dev)
             XCTFail("expected throw")
         } catch {
             XCTAssertTrue(error is FunctionKeyError)
@@ -50,8 +57,8 @@ final class FunctionKeyFeatureTests: XCTestCase {
             store: makeIsolatedStore()
         )
         XCTAssertNil(manager.confirmedMode)
-        await manager.setMode(.gaming)
-        XCTAssertEqual(manager.confirmedMode, .gaming)
+        await manager.setMode(AppMode.gaming)
+        XCTAssertEqual(manager.confirmedMode, AppMode.gaming)
     }
 
     func testConfirmedUnchangedOnFailure() async {
@@ -60,11 +67,17 @@ final class FunctionKeyFeatureTests: XCTestCase {
             features: FeatureManager(features: [FunctionKeyFeature(controller: controller)]),
             store: makeIsolatedStore()
         )
-        await manager.setMode(.gaming)
-        XCTAssertEqual(manager.confirmedMode, .gaming)
+        await manager.setMode(AppMode.gaming)
+        XCTAssertEqual(manager.confirmedMode, AppMode.gaming)
         controller.errorToThrow = FunctionKeyError.setFailed(code: -1)
-        await manager.setMode(.dev)
-        XCTAssertEqual(manager.currentMode, .gaming)
-        XCTAssertEqual(manager.confirmedMode, .gaming)
+        await manager.setMode(AppMode.dev)
+        XCTAssertEqual(manager.currentMode, AppMode.gaming)
+        XCTAssertEqual(manager.confirmedMode, AppMode.gaming)
+    }
+
+    func testSummaryDescribesSetting() {
+        let feature = FunctionKeyFeature(controller: MockFunctionKeyController())
+        XCTAssertTrue(feature.summary(for: AppMode.dev).contains("Standard"))
+        XCTAssertTrue(feature.summary(for: AppMode.gaming).contains("Media"))
     }
 }
