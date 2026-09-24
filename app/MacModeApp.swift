@@ -3,7 +3,9 @@ import SwiftUI
 @main
 struct MacModeApp: App {
     @State private var manager = ModeManager(
-        features: FeatureManager(features: []),
+        features: FeatureManager(features: [
+            FunctionKeyFeature(controller: IOKitFunctionKeyStore())
+        ]),
         store: UserDefaultsModeStore()
     )
 
