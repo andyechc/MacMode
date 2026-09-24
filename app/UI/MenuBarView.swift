@@ -11,15 +11,16 @@ struct MenuBarView: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("MacMode").font(.headline)
 
-            HStack(spacing: 8) {
+            HStack(spacing: 10) {
                 sideLabel("DEV", active: manager.currentMode == .dev)
-                Toggle(isOn: gamingBinding) {
-                    EmptyView()
-                }
-                .toggleStyle(.switch)
-                .disabled(manager.isApplying)
-                .labelsHidden()
+                    .frame(width: 52, alignment: .trailing)
+                Toggle("Gaming mode", isOn: gamingBinding)
+                    .toggleStyle(.switch)
+                    .labelsHidden()
+                    .fixedSize()
+                    .disabled(manager.isApplying)
                 sideLabel("GAMING", active: manager.currentMode == .gaming)
+                    .frame(width: 52, alignment: .leading)
             }
             .frame(width: 220)
 
