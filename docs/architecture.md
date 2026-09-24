@@ -50,6 +50,15 @@ lands.
 8. All collaborators behind protocols + dependency injection so unit tests
    use mocks (`MockFunctionKeyController`) without touching the real Mac.
 
+## UI decisions
+
+* `MenuBarExtra` uses `.menuBarExtraStyle(.window)` (explicit). Verified
+  2026-09-24: the default `.automatic` style renders content as menu items,
+  where `Toggle(.switch)` and custom-drawn switch controls do not paint
+  (invisible rows with menu-like blue hover). The window style renders a
+  real popover where standard controls work. Source: Apple Developer
+  Documentation, `MenuBarExtra` / `MenuBarExtraStyle`.
+
 ## Planned module layout (under `app/`)
 
 Per `SPEC.md` §22, adapted once the Xcode project exists. Directories are
