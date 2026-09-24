@@ -1,6 +1,8 @@
 # MacMode
 
-> **Status: Phase 0 — repository initialized. No MVP functionality is implemented yet.**
+> **Status: scaffold + domain complete, all tests green. No system
+> integration yet — the app launches as a menu bar agent and shows its
+> (persisted) mode, but does not change Function Keys.**
 
 MacMode is a lightweight native macOS menu bar utility that switches the Mac
 between two system profiles — **DEV** and **GAMING** — with a single fast
@@ -18,9 +20,13 @@ and [`AGENTS.md`](AGENTS.md) for agent working rules.
 
 ### Available
 
-None yet. The repository is initialized and the MVP is under development
-(research phase). This section will be updated as features land and are
-verified on a real Mac.
+* Menu bar agent that launches with no dock icon or main window, shows the
+  current (persisted) mode in its menu, and quits cleanly. Verified:
+  `xcodebuild build`, `xcodebuild test` (8 tests), launch as background
+  process.
+* Domain layer: `MacMode`, `ModeManager` (idempotent transitions, explicit
+  errors, `UserDefaults` persistence), `FeatureManager` (`SystemFeature`
+  fan-out), `OSLog` logging. All unit-tested with mocks; no system touched.
 
 ### Planned
 
@@ -74,14 +80,13 @@ Determined from the actual environment (not invented):
 
 ## Installation
 
-Developer installation (Xcode project scaffold is the next Phase 0 step;
-these steps will be verified once it lands):
+Developer installation (verified 2026-09-24 on macOS 27.0 / Xcode 27.0):
 
 ```text
 git clone https://github.com/andyechc/MacMode.git
-→ Open MacMode.xcodeproj in Xcode
+→ Open MacMode.xcodeproj in Xcode (or: xcodegen generate, project.yml is source of truth)
 → Build (⌘B)
-→ Run (⌘R)
+→ Run (⌘R, verified: launches as a background menu bar process)
 ```
 
 No release artifact exists yet, so there is no download/install flow to

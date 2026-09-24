@@ -21,9 +21,8 @@ xcodebuild -scheme MacMode -configuration Debug \
 xcodebuild test -scheme MacMode -destination 'platform=macOS'
 ```
 
-Scheme/destination names above are the intended convention; verify with
-`xcodebuild -list` once the project exists and correct this file if they
-differ.
+Scheme/destination names above are verified working (`xcodebuild -list`
+shows schemes `MacMode`; build + test green 2026-09-24).
 
 ## Workflow
 
