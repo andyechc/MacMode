@@ -14,11 +14,14 @@ struct MenuBarView: View {
             HStack(spacing: 10) {
                 sideLabel("DEV", active: manager.currentMode == .dev)
                     .frame(width: 52, alignment: .trailing)
-                Toggle("Gaming mode", isOn: gamingBinding)
-                    .toggleStyle(.switch)
-                    .labelsHidden()
-                    .fixedSize()
-                    .disabled(manager.isApplying)
+                ModeSwitch(
+                    isOn: manager.currentMode == .gaming,
+                    disabled: manager.isApplying
+                ) {
+                    Task {
+                        await manager.setMode(manager.currentMode == .gaming ? .dev : .gaming)
+                    }
+                }
                 sideLabel("GAMING", active: manager.currentMode == .gaming)
                     .frame(width: 52, alignment: .leading)
             }
@@ -54,11 +57,34 @@ struct MenuBarView: View {
             .fontWeight(active ? .bold : .regular)
             .foregroundStyle(active ? .primary : .secondary)
     }
+}
 
-    private var gamingBinding: Binding<Bool> {
-        Binding(
-            get: { manager.currentMode == .gaming },
-            set: { isGaming in Task { await manager.setMode(isGaming ? .gaming : .dev) } }
-        )
+/// Switch equivalente a un Toggle nativo, dibujado con primitivas
+/// (el `Toggle(.switch)` no se renderiza en este popover).
+/// Un solo control: apagado = DEV, encendido = GAMING.
+struct ModeSwitch: View {
+    var isOn: Bool
+    var disabled: Bool
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            ZStack(alignment: isOn ? .trailing : .leading) {
+                Capsule()
+                    .fill(isOn ? Color.accentColor : Color.secondary.opacity(0.35))
+                    .frame(width: 46, height: 26)
+                Circle()
+                    .fill(.white)
+                    .frame(width: 20, height: 20)
+                    .padding(3)
+                    .shadow(radius: 1)
+            }
+        }
+        .buttonStyle(.plain)
+        .disabled(disabled)
+        .accessibilityLabel(isOn ? "GAMING" : "DEV")
+        .accessibilityAddTraits(.isToggle)
+        .accessibilityValue(isOn ? "on" : "off")
     }
+}
 }
