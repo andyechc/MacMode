@@ -20,9 +20,10 @@ and [`AGENTS.md`](AGENTS.md) for agent working rules.
 
 ### Available
 
-* Menu bar agent that launches with no dock icon or main window, shows the
-  current (persisted) mode in its menu, and quits cleanly. Verified:
-  `xcodebuild build`, `xcodebuild test` (8 tests), launch as background
+* Menu bar agent (window-style popover) with mode select, per-mode accent
+  color, Information and Settings windows, mode library editing
+  (add/rename/recolor/delete), persisted mode, and clean quit. Verified:
+  `xcodebuild build`, `xcodebuild test` (23 tests), launch as background
   process.
 * Domain layer: `MacMode`, `ModeManager` (idempotent transitions, explicit
   errors, `UserDefaults` persistence), `FeatureManager` (`SystemFeature`

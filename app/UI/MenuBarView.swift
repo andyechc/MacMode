@@ -3,15 +3,12 @@ import SwiftUI
 /// Menu bar popover (window style). Accent color follows the current mode.
 /// A select always shows the current mode; switching applies it through
 /// `ModeManager`. "Active now" appears only after system confirmation.
+/// Information and Settings live in their own windows.
 struct MenuBarView: View {
     var manager: ModeManager
-
-    @State private var infoHover = false
-    @State private var infoPinned = false
-    @State private var showSettings = false
+    @Environment(\.openWindow) private var openWindow
 
     private var mode: AppMode { manager.currentMode }
-    private var infoVisible: Bool { infoHover || infoPinned }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -23,20 +20,24 @@ struct MenuBarView: View {
                 errorRow(error)
             }
             Divider()
-            infoRow
-            if infoVisible {
-                infoDetail
+            Button {
+                openWindow(id: "info")
+            } label: {
+                Label("Information", systemImage: "info.circle")
             }
-            settingsRow
+            .buttonStyle(.plain)
+            Button {
+                openWindow(id: "settings")
+            } label: {
+                Label("Settings…", systemImage: "gearshape")
+            }
+            .buttonStyle(.plain)
             Divider()
             footer
         }
         .tint(mode.color.color)
         .padding(14)
         .frame(width: 280)
-        .sheet(isPresented: $showSettings) {
-            SettingsView(manager: manager)
-        }
     }
 
     // MARK: - Sections
@@ -93,58 +94,6 @@ struct MenuBarView: View {
             Button("Dismiss") { manager.clearError() }
                 .font(.caption)
         }
-    }
-
-    private var infoRow: some View {
-        Button {
-            infoPinned.toggle()
-        } label: {
-            HStack {
-                Label("Information", systemImage: "info.circle")
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .buttonStyle(.plain)
-        .onHover { infoHover = $0 }
-    }
-
-    private var infoDetail: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Active in \(mode.name)")
-                .font(.caption).fontWeight(.semibold)
-            ForEach(manager.systemFeatures, id: \.identifier) { feature in
-                HStack(alignment: .top, spacing: 6) {
-                    Circle()
-                        .fill(manager.confirmedMode == mode ? Color.green : Color.orange)
-                        .frame(width: 7, height: 7)
-                        .padding(.top, 4)
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text(feature.identifier)
-                            .font(.caption).fontWeight(.medium)
-                        Text(feature.summary(for: mode))
-                            .font(.caption).foregroundStyle(.secondary)
-                    }
-                }
-            }
-            if manager.confirmedMode != mode {
-                Text("Pending — switch to this mode to apply it.")
-                    .font(.caption).foregroundStyle(.orange)
-            }
-        }
-        .padding(8)
-        .background(Color(nsColor: .controlBackgroundColor))
-        .cornerRadius(8)
-    }
-
-    private var settingsRow: some View {
-        Button {
-            showSettings = true
-        } label: {
-            Label("Settings…", systemImage: "gearshape")
-        }
-        .buttonStyle(.plain)
     }
 
     private var footer: some View {

@@ -16,5 +16,15 @@ struct MacModeApp: App {
             Label(manager.currentMode.name, systemImage: "slider.horizontal.3")
         }
         .menuBarExtraStyle(.window)
+
+        Window("Información", id: "info") {
+            InfoView(manager: manager)
+        }
+        .windowResizability(.contentSize)
+
+        Window("Ajustes de MacMode", id: "settings") {
+            SettingsView(manager: manager)
+        }
+        .windowResizability(.contentSize)
     }
 }

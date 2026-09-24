@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Mode library editor (modal sheet). Rename modes, recolor them, change
+/// Mode library editor (standalone window). Rename modes, recolor them, change
 /// their Function Key behavior, add new ones, delete unneeded ones.
 /// At least one mode always remains.
 struct SettingsView: View {
@@ -60,8 +60,8 @@ struct SettingsView: View {
                     .keyboardShortcut(.defaultAction)
             }
         }
-        .padding(16)
-        .frame(width: 380, height: 440)
+        .padding(18)
+        .frame(minWidth: 420, minHeight: 380)
     }
 }
 

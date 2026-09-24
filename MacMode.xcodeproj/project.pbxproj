@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08054FF35944844C6A2BCDCB /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AFC0FEA68A8847E7281370 /* InfoView.swift */; };
 		31E19032BDCBC1672873ED59 /* ModeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6773170C11459C47C1BD7B02 /* ModeStore.swift */; };
 		608B47875332D0F9072D58CC /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F892538D09D5E479AE2D8EBC /* Mocks.swift */; };
 		63AA8735FD7E6E6C503C9B09 /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFF320E8F8B148B3CA7C241 /* FeatureManager.swift */; };
@@ -52,6 +53,7 @@
 		AA42E467DB74C498BC90C02B /* AppLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLog.swift; sourceTree = "<group>"; };
 		AF2C67DB1A714158F506341C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B09D28664EA7A47720A33BF3 /* FunctionKeyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionKeyController.swift; sourceTree = "<group>"; };
+		B0AFC0FEA68A8847E7281370 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		B6A340138B5300DD4E8E59A7 /* MacMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMode.swift; sourceTree = "<group>"; };
 		C1A14390E0F0C43BAEFF649E /* MacModeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacModeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F892538D09D5E479AE2D8EBC /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		4C81CCF50A7D44EE43603DE8 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				B0AFC0FEA68A8847E7281370 /* InfoView.swift */,
 				7C0D3BFDF4DB4C152575B32F /* MenuBarView.swift */,
 				AF2C67DB1A714158F506341C /* SettingsView.swift */,
 			);
@@ -269,6 +272,7 @@
 				63AA8735FD7E6E6C503C9B09 /* FeatureManager.swift in Sources */,
 				D16A1F8C4013CD3FFD4A86EC /* FunctionKeyController.swift in Sources */,
 				E36F4B0817970E0CF14D26A5 /* FunctionKeyFeature.swift in Sources */,
+				08054FF35944844C6A2BCDCB /* InfoView.swift in Sources */,
 				DE66C799394E98DF80CAAFF2 /* MacMode.swift in Sources */,
 				9B2A00C6D50C8F402F62BCB2 /* MacModeApp.swift in Sources */,
 				950678B89ADBE64CB2ABFA6F /* MenuBarView.swift in Sources */,
