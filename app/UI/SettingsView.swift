@@ -5,7 +5,6 @@ import SwiftUI
 /// At least one mode always remains.
 struct SettingsView: View {
     var manager: ModeManager
-    @Environment(\.dismiss) private var dismiss
 
     @State private var newName = ""
     @State private var newColor: ModeColor = .green
@@ -56,7 +55,7 @@ struct SettingsView: View {
             Spacer()
             HStack {
                 Spacer()
-                Button("Done") { dismiss() }
+                Button("Done") { NSApp.keyWindow?.close() }
                     .keyboardShortcut(.defaultAction)
             }
         }

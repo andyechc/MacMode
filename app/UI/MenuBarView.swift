@@ -3,12 +3,17 @@ import SwiftUI
 /// Menu bar popover (window style). Accent color follows the current mode.
 /// A select always shows the current mode; switching applies it through
 /// `ModeManager`. "Active now" appears only after system confirmation.
-/// Information and Settings live in their own windows.
+/// Information opens a hover side panel (submenu style); Settings opens a
+/// standalone window.
 struct MenuBarView: View {
     var manager: ModeManager
-    @Environment(\.openWindow) private var openWindow
+    var opener: WindowOpener
+
+    @State private var infoHover = false
+    @State private var infoPinned = false
 
     private var mode: AppMode { manager.currentMode }
+    private var infoVisible: Bool { infoHover || infoPinned }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -21,13 +26,22 @@ struct MenuBarView: View {
             }
             Divider()
             Button {
-                openWindow(id: "info")
+                infoPinned.toggle()
             } label: {
-                Label("Information", systemImage: "info.circle")
+                HStack {
+                    Label("Information", systemImage: "info.circle")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(.secondary)
+                }
             }
             .buttonStyle(.plain)
+            .onHover { infoHover = $0 }
+            .popover(isPresented: .constant(infoVisible), arrowEdge: .trailing) {
+                InfoDetailView(manager: manager)
+            }
             Button {
-                openWindow(id: "settings")
+                opener.openSettings(manager: manager)
             } label: {
                 Label("Settings…", systemImage: "gearshape")
             }

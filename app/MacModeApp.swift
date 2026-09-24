@@ -8,23 +8,14 @@ struct MacModeApp: App {
         ]),
         store: UserDefaultsModeStore()
     )
+    @StateObject private var opener = WindowOpener()
 
     var body: some Scene {
         MenuBarExtra {
-            MenuBarView(manager: manager)
+            MenuBarView(manager: manager, opener: opener)
         } label: {
             Label(manager.currentMode.name, systemImage: "slider.horizontal.3")
         }
         .menuBarExtraStyle(.window)
-
-        Window("Información", id: "info") {
-            InfoView(manager: manager)
-        }
-        .windowResizability(.contentSize)
-
-        Window("Ajustes de MacMode", id: "settings") {
-            SettingsView(manager: manager)
-        }
-        .windowResizability(.contentSize)
     }
 }
